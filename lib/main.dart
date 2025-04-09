@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_calculator/ui/calculator/view_model/calculator_view_model.dart';
-import 'package:flutter_mini_calculator/ui/core/calculator_view.dart';
+import 'package:flutter_mini_calculator/view_model/calculator_view_model.dart';
+import 'package:flutter_mini_calculator/view/calculator_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CalculatorViewModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CalculatorScreen(viewModel: CalculatorViewModel()),
+      home: CalculatorView(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
