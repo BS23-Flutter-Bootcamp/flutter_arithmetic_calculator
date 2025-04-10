@@ -1,24 +1,9 @@
 class CalculatorModel {
-  String calculate({
-    required double firstNumber,
-    required double secondNumber,
-    required String operation,
-  }) {
-    try {
-      final result =
-          {
-            '+': firstNumber + secondNumber,
-            '-': firstNumber - secondNumber,
-            '*': firstNumber * secondNumber,
-            '/': firstNumber / secondNumber,
-          }[operation];
-
-      if (result == null) {
-        return 'Error: Invalid operation';
-      }
-      return 'Result: $result';
-    } catch (e) {
-      return 'Error: ${e.toString()}';
-    }
+  double add(double a, double b) => a + b;
+  double subtract(double a, double b) => a - b;
+  double multiply(double a, double b) => a * b;
+  double divide(double a, double b) {
+    if (b == 0) throw Exception("Cannot divide by zero");
+    return a / b;
   }
 }

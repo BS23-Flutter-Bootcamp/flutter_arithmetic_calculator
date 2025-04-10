@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_calculator/utils/operation.dart';
 import 'package:flutter_mini_calculator/view/widgets/calculator_button.dart';
 import 'package:flutter_mini_calculator/view_model/calculator_view_model.dart';
 import 'package:provider/provider.dart';
 
-class CalculatorView extends StatelessWidget {
-  CalculatorView({super.key});
+class CalculatorView extends StatefulWidget {
+  const CalculatorView({super.key});
 
+  @override
+  State<CalculatorView> createState() => _CalculatorViewState();
+}
+
+class _CalculatorViewState extends State<CalculatorView> {
   final TextEditingController _firstController = TextEditingController();
   final TextEditingController _secondController = TextEditingController();
-  final List<String> _operators = ['+', '-', '*', '/'];
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -74,13 +79,18 @@ class CalculatorView extends StatelessWidget {
                     runSpacing: 20.0,
                     alignment: WrapAlignment.center,
                     children:
-                        _operators.map((operator) {
+                        Operations.values.map((operator) {
                           return CalculatorButton(
-                            formKey: _formKey,
-                            viewModel: viewModel,
                             operator: operator,
-                            firstController: _firstController,
-                            secondController: _secondController,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                viewModel.calculate(
+                                  operationType: operator,
+                                  firstText: _firstController.text,
+                                  secondText: _secondController.text,
+                                );
+                              }
+                            },
                           );
                         }).toList(),
                   ),
